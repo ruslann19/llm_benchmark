@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import TypeVar, Generic, List, Optional
+from typing import TypeVar, Generic, List
 
 # Объявляем дженерик-тип для сущности (Entity)
 T = TypeVar("T")
@@ -12,7 +12,12 @@ class Repository(ABC, Generic[T]):
         raise NotImplementedError
 
     @abstractmethod
-    def get_by_id(self, entity_id) -> Optional[T]:
+    def add_all(self, entities: list[T]) -> list[T]:
+        """Создаёт новые сущности и возвращает их (возможно, с присвоенными ID)"""
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_by_id(self, entity_id) -> T | None:
         """Возвращает сущность по её идентификатору или None, если не найдена."""
         raise NotImplementedError
 

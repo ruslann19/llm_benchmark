@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 from dataclasses import dataclass
 
 # from domain.validations import validate_task_state
@@ -9,8 +9,8 @@ class Task:
     question: str
     answer: str
     source_url: str
-    published_at: date
-    state: str
+    published_at: datetime = datetime.now()
+    state: str = "on validation"
     id: int | None = None
 
 
