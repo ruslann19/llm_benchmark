@@ -1,17 +1,27 @@
-from datetime import datetime
+from datetime import datetime, date
 from dataclasses import dataclass
 
-# from domain.validations import validate_task_state
+
+ON_VALIDATION_STATE = "on validation"
+QUEUE_STATE = "queue"
+BENCHMARK_STATE = "benchmark"
+ARCHIVE_STATE = "archive"
 
 
 @dataclass
 class Task:
     question: str
     answer: str
-    source_url: str
-    published_at: datetime = datetime.now()
     state: str = "on validation"
     id: int | None = None
+    source_url: str | None = None
+    published_date: date = date.today()
+
+    benchmark_version: int | None = None
+    created_at: datetime = datetime.now()
+
+
+# from domain.validations import validate_task_state
 
 
 # class Task:
