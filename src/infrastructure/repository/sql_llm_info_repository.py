@@ -79,3 +79,14 @@ class SqlLLMInfoRepository(LLMInfoRepository):
             session.delete(entity_orm)
             session.commit()
             return True
+
+    def get_by_name(self, name: str) -> int | None:
+        with self._session_factory() as session:
+            stmt = select(LLMInfoOrm).where(LLMInfoOrm.name == name)
+            entity_orm = session.execute(stmt).scalar_one_or_none()
+
+        if not entity_orm:
+            return None
+
+        entity = self._from_orm(entity_orm)
+        return entity

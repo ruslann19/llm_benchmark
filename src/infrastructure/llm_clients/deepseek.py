@@ -1,7 +1,6 @@
 from interfaces import LLMClient
 from infrastructure import settings
 from openai import OpenAI
-from .question_params import question_header
 
 
 class DeepSeekClient(LLMClient):
@@ -14,13 +13,11 @@ class DeepSeekClient(LLMClient):
             base_url="https://api.deepseek.com",
         )
 
-        content = question_header + question
-
         response = client.chat.completions.create(
             model="deepseek-chat",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant"},
-                {"role": "user", "content": content},
+                {"role": "user", "content": question},
             ],
             stream=False,
         )
@@ -30,3 +27,6 @@ class DeepSeekClient(LLMClient):
     @property
     def llm_id(self) -> int:
         return self._llm_id
+
+    def __repr__(self) -> str:
+        return f"DeepSeekClient(llm_id={self.llm_id})"

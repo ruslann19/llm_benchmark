@@ -10,6 +10,7 @@ class LLMResponseOrm(Base):
     task_id: Mapped[int] = mapped_column(ForeignKey("tasks.id", ondelete="CASCADE"))
     llm_id: Mapped[int] = mapped_column(ForeignKey("llm_infos.id", ondelete="CASCADE"))
     response: Mapped[str]
+    is_correct: Mapped[bool | None]
 
     task: Mapped["TaskOrm"] = relationship(back_populates="llm_responses")  # noqa: F821
 
@@ -22,6 +23,7 @@ def llm_response_to_orm(llm_response: LLMResponse) -> LLMResponseOrm:
         task_id=llm_response.task_id,
         llm_id=llm_response.llm_id,
         response=llm_response.response,
+        is_correct=llm_response.is_correct,
     )
 
 
@@ -31,4 +33,5 @@ def llm_response_from_orm(llm_response_orm: LLMResponseOrm) -> LLMResponse:
         task_id=llm_response_orm.task_id,
         llm_id=llm_response_orm.llm_id,
         response=llm_response_orm.response,
+        is_correct=llm_response_orm.is_correct,
     )

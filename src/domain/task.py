@@ -12,7 +12,7 @@ ARCHIVE_STATE = "archive"
 class Task:
     question: str
     answer: str
-    state: str = "on validation"
+    state: str = QUEUE_STATE
     id: int | None = None
     source_url: str | None = None
     published_date: date | None = None

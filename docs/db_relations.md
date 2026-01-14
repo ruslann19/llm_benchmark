@@ -19,6 +19,7 @@ erDiagram
         int task_id FK
         int llm_id FK
         string response
+        bool is_valid
         date created_at
     }
     LLMInfo {

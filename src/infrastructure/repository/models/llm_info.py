@@ -6,7 +6,7 @@ from domain import LLMInfo
 class LLMInfoOrm(Base):
     __tablename__ = "llm_infos"
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str]
+    name: Mapped[str] = mapped_column(unique=True)
     provider: Mapped[str]
     api_url: Mapped[str]
 

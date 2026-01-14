@@ -3,11 +3,14 @@ from sqlalchemy.orm import sessionmaker
 from infrastructure import settings
 from infrastructure.repository import (
     SqlTaskRepository,
-    SqlDatabase,
+    SqlLLMInfoRepository,
+    SqlLLMResponseRepository,
 )
 from infrastructure.task_maker import LLMTaskGenerator, YourOwnGameLoader
-from use_cases import TaskCollector
+from use_cases import TaskCollector, Evaluator
 import argparse
+from infrastructure.llm_clients import DeepSeekClient
+from infrastructure.deepseek_llm_response_judge import DeepSeekLLMResponseJudge
 
 
 # Подключение к БД
@@ -16,15 +19,13 @@ engine = create_engine(
     # echo=True,
     echo=False,
 )
-database = SqlDatabase(engine)
+
 session_factory = sessionmaker(engine)
 
 
-# database.drop_tables()
-# database.create_tables()
-
-
 task_repository = SqlTaskRepository(session_factory)
+llm_repository = SqlLLMInfoRepository(session_factory)
+response_repository = SqlLLMResponseRepository(session_factory)
 
 
 def main():
@@ -71,8 +72,54 @@ def main():
 
         if updated_success:
             print("Запуск тестирования")
-            # run_testing()
+
+            llm_names = [
+                "DeepSeek",
+                "GigaChat",
+                "Alice AI",
+            ]
+            llms = {}
+            for name in llm_names:
+                llms[name] = llm_repository.get_by_name(name)
+
+            print(llms)
+            llm_clients = [
+                DeepSeekClient(llm_id=llms["DeepSeek"].id),
+            ]
+
+            evaluator = Evaluator(
+                tasks=task_repository.filter_by_state("benchmark"),
+                llm_clients=llm_clients,
+                judge=DeepSeekLLMResponseJudge(),
+            )
+            llm_responses = evaluator.run()
+            response_repository.add_all(llm_responses)
 
 
 if __name__ == "__main__":
     main()
+
+    # import pandas as pd
+    # from domain import Task
+    # from infrastructure.repository import SqlDatabase
+
+    # database = SqlDatabase(engine)
+    # database.drop_tables()
+    # database.create_tables()
+
+    # # tasks = task_repository.get_all()
+    # # df = pd.DataFrame(tasks)
+    # # df.to_csv("tasks.csv")
+
+    # df = pd.read_csv("tasks.csv")
+
+    # tasks = []
+    # for task_df in df.values:
+    #     task = Task(
+    #         question=task_df[1],
+    #         answer=task_df[2],
+    #         source_url=task_df[5],
+    #     )
+    #     tasks.append(task)
+
+    # task_repository.add_all(tasks)
