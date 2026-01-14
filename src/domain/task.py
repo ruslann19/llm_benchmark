@@ -15,7 +15,7 @@ class Task:
     state: str = "on validation"
     id: int | None = None
     source_url: str | None = None
-    published_date: date = date.today()
+    published_date: date | None = None
 
     benchmark_version: int | None = None
     created_at: datetime = datetime.now()

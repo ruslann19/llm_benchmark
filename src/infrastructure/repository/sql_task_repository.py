@@ -23,7 +23,7 @@ class SqlTaskRepository(TaskRepository):
         self._session_factory = session_factory
         self._to_orm = task_to_orm
         self._from_orm = task_from_orm
-        self._BENCHMARK_SIZE = 2
+        self._BENCHMARK_SIZE = 10
 
     def add(self, task: Task) -> Task:
         task_orm = self._to_orm(task)
