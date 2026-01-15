@@ -8,11 +8,11 @@ erDiagram
         int id PK
         string question
         string answer
+        string state
         string source_url
         date published_date
-        datetime created_at
-        string state
         int benchmark_version
+        datetime created_at
     }
     LLM_RESPONSE {
         int id PK
@@ -20,11 +20,10 @@ erDiagram
         int llm_id FK
         string response
         bool is_valid
-        date created_at
     }
     LLMInfo {
         int id PK
-        string model_name
+        string name
         string provider
         string api_url
     }

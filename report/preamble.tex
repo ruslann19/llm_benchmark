@@ -1,0 +1,55 @@
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage[cp1251]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{kprj}
+
+\ifpdftex
+    \usepackage{enumitem}
+    \setlist[description]{style=nextline}
+    \usepackage[unicode=true]{hyperref}
+    \hypersetup{pdfpagemode=UseNone, pdfstartview = FitR 0 0 200 1000}
+    \BlackColorLinks
+\fi
+
+\ifpdftex
+    % pdftex понимает форматы рисунков PNG, JPEG, PDF
+    \DeclareGraphicsExtensions{.pdf}
+\else
+    % При создании DVI возможны практически все форматы, но EPS предпочтительнее
+    \DeclareGraphicsExtensions{.eps}
+\fi
+
+\usepackage{bbm}
+\usepackage{listings}
+
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\usepackage{caption}
+\usepackage{subcaption}

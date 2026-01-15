@@ -82,7 +82,6 @@ def main():
             for name in llm_names:
                 llms[name] = llm_repository.get_by_name(name)
 
-            print(llms)
             llm_clients = [
                 DeepSeekClient(llm_id=llms["DeepSeek"].id),
             ]
