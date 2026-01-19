@@ -59,7 +59,7 @@ class LLMTaskGenerator(TaskGenerator):
                         except json.JSONDecodeError:
                             # Не валидный JSON — возможно, модель ещё не закончила строку
                             # Но в корректном JSONL такого не должно быть
-                            pass
+                            print("Объект не является валидным JSON:", line)
 
                 # full_response += delta
                 # print(delta, end="", flush=True)  # Постепенный вывод

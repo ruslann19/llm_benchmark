@@ -106,9 +106,9 @@ if __name__ == "__main__":
     # database.drop_tables()
     # database.create_tables()
 
-    # # tasks = task_repository.get_all()
-    # # df = pd.DataFrame(tasks)
-    # # df.to_csv("tasks.csv")
+    # tasks = task_repository.get_all()
+    # df = pd.DataFrame(tasks)
+    # df.to_csv("tasks.csv")
 
     # df = pd.read_csv("tasks.csv")
 

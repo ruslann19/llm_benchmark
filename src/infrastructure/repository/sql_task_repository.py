@@ -23,7 +23,7 @@ class SqlTaskRepository(TaskRepository):
         self._session_factory = session_factory
         self._to_orm = task_to_orm
         self._from_orm = task_from_orm
-        self._BENCHMARK_SIZE = 10
+        self._BENCHMARK_SIZE = 100
 
     def add(self, task: Task) -> Task:
         task_orm = self._to_orm(task)
@@ -141,7 +141,7 @@ class SqlTaskRepository(TaskRepository):
         benchmark_tasks = self.filter_by_state(state=BENCHMARK_STATE)
         return benchmark_tasks
 
-    def get_benchmark_version(self, benchmark_version: date) -> list[Task]:
+    def get_benchmark_version(self, benchmark_version: int) -> list[Task]:
         stmt = select(TaskOrm).where(TaskOrm.benchmark_version == benchmark_version)
 
         with self._session_factory() as session:
