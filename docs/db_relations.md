@@ -2,9 +2,9 @@
 
 ```mermaid
 erDiagram
-    LLM_RESPONSE ||--|{ TASK : "answers"
-    LLM_RESPONSE ||--|{ LLMInfo : "uses"
-    TASK {
+    llm_responses ||--|{ tasks : "answers"
+    llm_responses ||--|{ llm_infos : "uses"
+    tasks {
         int id PK
         string question
         string answer
@@ -14,14 +14,15 @@ erDiagram
         int benchmark_version
         datetime created_at
     }
-    LLM_RESPONSE {
+    llm_responses {
         int id PK
         int task_id FK
         int llm_id FK
+        double temperature
         string response
         bool is_valid
     }
-    LLMInfo {
+    llm_infos {
         int id PK
         string name
         string provider

@@ -1,5 +1,5 @@
 from infrastructure.repository.models import Base
-from sqlalchemy import Engine, event
+from sqlalchemy import Engine
 
 
 class SqlDatabase:
@@ -8,13 +8,6 @@ class SqlDatabase:
         engine: Engine,
     ) -> None:
         self._engine = engine
-
-        # Включаем поддержку внешних ключей в SQLite
-        @event.listens_for(engine, "connect")
-        def set_sqlite_pragma(dbapi_connection, connection_record):
-            cursor = dbapi_connection.cursor()
-            cursor.execute("PRAGMA foreign_keys=ON")
-            cursor.close()
 
     def create_tables(self) -> None:
         Base.metadata.create_all(self._engine)
